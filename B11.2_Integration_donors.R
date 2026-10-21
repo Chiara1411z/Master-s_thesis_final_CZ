@@ -74,12 +74,12 @@ for (group in plot_groups) {
     theme_classic() +
     labs(title = paste("UMAP by", group))
   
-  # Format legends with many items (like ID) into two columns so they fit
+  # Format legends 
   if (group %in% c("ID", "Seurat_Clusters", "Library")) {
     p_umap <- p_umap + guides(color = guide_legend(ncol = 2, override.aes = list(size = 3)))
   }
   
-  # Construct the file name dynamically
+  # Construct the file name 
   file_name <- paste0("11_donor_", group, ".svg")
   
   # Save the individual plot
