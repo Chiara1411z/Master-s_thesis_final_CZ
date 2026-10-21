@@ -9,7 +9,7 @@ csv_dir     <- output_base
 Plots_dir   <- file.path(output_base, "Plots")
 
 # -------------------------------------------------------------------------
-# Shared theme (matches the other thesis figures)
+# Shared theme
 theme_thesis <- theme(
   plot.title           = element_text(hjust = 0.5, face = "bold", size = 11),
   axis.title.x         = element_text(face = "bold", size = 10),
@@ -51,7 +51,6 @@ plot_volcano_fig <- function(deg_df, title, y_quantile = 0.99) {
   # underflow genes are placed far above the visible range
   plot_data$nlogp[plot_data$underflow] <- y_top * 10
   
-  # draw significant genes on top of the grey mass
   plot_data <- plot_data %>% dplyr::arrange(sig)
   
   lbl_dec <- paste0("atop(bolditalic('Decreased in TDP-43'^Low), bolditalic('n = ", n_dec, "'))")
@@ -121,7 +120,6 @@ make_go_plot <- function(deg_files, title_text, top_n = 5) {
     dplyr::ungroup() %>%
     tidyr::separate(Cluster, into = c("Subtype", "Direction"), sep = "\\|\\|", remove = FALSE)
   
-  # facet labels without the "ALS Exc " / "ALS-FTD Exc " prefix
   short_labels <- sub("^ALS(-FTD)? Exc ", "", names(deg_files))
   
   df_plot$Subtype   <- factor(df_plot$Subtype, levels = names(deg_files), labels = short_labels)
@@ -155,7 +153,7 @@ make_go_plot <- function(deg_files, title_text, top_n = 5) {
 }
 
 # -------------------------------------------------------------------------
-# 3. Figure builder: A-D = volcanoes (own block), E = GO ORA
+# 3. Plot
 tag_theme <- theme(plot.tag = element_text(size = 15, face = "bold"))
 add_tag   <- function(p, letter) p + labs(tag = letter) + tag_theme
 
